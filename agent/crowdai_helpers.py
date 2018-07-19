@@ -7,7 +7,7 @@ import crowdai_api
 crowdai_events = crowdai_api.events.CrowdAIEvents()
 
 
-def execution_start(execution_state):
+def execution_start():
     ########################################################################
     # Register Evaluation Start event
     ########################################################################
@@ -15,28 +15,26 @@ def execution_start(execution_state):
                 event_type=crowdai_events.CROWDAI_EVENT_INFO,
                 message="execution_started",
                 payload={ #Arbitrary Payload
-                    "type": "example_contractor:execution_started",
-                    "execution_state" : execution_state
+                    "type": "example_contractor:execution_started"
                     }
                 )
 
 
-def execution_progress(execution_state):
-    steps = execution_state["steps"]
-    TOTAL_STEPS = execution_state["TOTAL_STEPS"]
+def execution_progress(progress_payload):
+    step = progress_payload["step"]
     ########################################################################
     # Register Evaluation Progress event
     ########################################################################
     crowdai_events.register_event(
                 event_type=crowdai_events.CROWDAI_EVENT_INFO,
-                message="execution_progress : {}/{}".format(len(steps), TOTAL_STEPS),
+                message="execution_progress : {}".format(step),
                 payload={ #Arbitrary Payload
                     "type": "example_contractor:execution_progress",
-                    "execution_state" : execution_state
+                    "step" : step
                     }
                 )
 
-def execution_success(execution_state):
+def execution_success():
     ########################################################################
     # Register Evaluation Complete event
     ########################################################################
@@ -45,12 +43,11 @@ def execution_success(execution_state):
                 message="execution_success",
                 payload={ #Arbitrary Payload
                     "type": "example_contractor:execution_success",
-                    "execution_state" : execution_state
                     },
                 blocking=True
                 )
 
-def execution_error(execution_state):
+def execution_error(error):
     ########################################################################
     # Register Evaluation Complete event
     ########################################################################
@@ -59,7 +56,7 @@ def execution_error(execution_state):
                 message="execution_error",
                 payload={ #Arbitrary Payload
                     "type": "example_contractor:execution_error",
-                    "execution_state" : execution_state
+                    "error" : error
                     },
                 blocking=True
                 )
