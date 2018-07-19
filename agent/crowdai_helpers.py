@@ -7,45 +7,59 @@ import crowdai_api
 crowdai_events = crowdai_api.events.CrowdAIEvents()
 
 
-def evaluation_start(evaluation_state):
+def execution_start(execution_state):
     ########################################################################
     # Register Evaluation Start event
     ########################################################################
     crowdai_events.register_event(
                 event_type=crowdai_events.CROWDAI_EVENT_INFO,
-                message="evaluation_started",
+                message="execution_started",
                 payload={ #Arbitrary Payload
-                    "type": "example_contractor:evaluation_started",
-                    "evaluation_state" : evaluation_state
+                    "type": "example_contractor:execution_started",
+                    "execution_state" : execution_state
                     }
                 )
 
 
-def evaluation_progress(evaluation_state):
-    step = evaluation_state["step"]
-    TOTAL_STEPS = evaluation_state["TOTAL_STEPS"]
+def execution_progress(execution_state):
+    steps = execution_state["steps"]
+    TOTAL_STEPS = execution_state["TOTAL_STEPS"]
     ########################################################################
     # Register Evaluation Progress event
     ########################################################################
     crowdai_events.register_event(
                 event_type=crowdai_events.CROWDAI_EVENT_INFO,
-                message="evaluation_progress : {}/{}".format(step, TOTAL_STEPS),
+                message="execution_progress : {}/{}".format(len(steps), TOTAL_STEPS),
                 payload={ #Arbitrary Payload
-                    "type": "example_contractor:evaluation_progress",
-                    "evaluation_state" : evaluation_state
+                    "type": "example_contractor:execution_progress",
+                    "execution_state" : execution_state
                     }
                 )
 
-def evaluation_success(evaluation_state):
+def execution_success(execution_state):
     ########################################################################
     # Register Evaluation Complete event
     ########################################################################
     crowdai_events.register_event(
                 event_type=crowdai_events.CROWDAI_EVENT_SUCCESS,
-                message="evaluation_success",
+                message="execution_success",
                 payload={ #Arbitrary Payload
-                    "type": "example_contractor:evaluation_complete",
-                    "evaluation_state" : evaluation_state
+                    "type": "example_contractor:execution_success",
+                    "execution_state" : execution_state
+                    },
+                blocking=True
+                )
+
+def execution_error(execution_state):
+    ########################################################################
+    # Register Evaluation Complete event
+    ########################################################################
+    crowdai_events.register_event(
+                event_type=crowdai_events.CROWDAI_EVENT_ERROR,
+                message="execution_error",
+                payload={ #Arbitrary Payload
+                    "type": "example_contractor:execution_error",
+                    "execution_state" : execution_state
                     },
                 blocking=True
                 )
