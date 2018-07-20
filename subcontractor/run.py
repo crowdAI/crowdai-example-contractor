@@ -35,6 +35,7 @@ class CrowdAISubContractor:
             raise Exception("Unknown event_type")
 
     def handle_success_event(self, payload):
+        self.evaluation_state["state"] = "execution_success"
         self.oracle_events.register_event(
             event_type=self.oracle_events.CROWDAI_EVENT_SUCCESS,
             payload=self.evaluation_state
@@ -42,6 +43,7 @@ class CrowdAISubContractor:
 
     def handle_error_event(self, payload):
         self.evaluation_state["error"] = payload["error"]
+        self.evaluation_state["state"] = "execution_error"
         self.oracle_events.register_event(
             event_type=self.oracle_events.CROWDAI_EVENT_ERROR,
             message="Error in Agent. Please refer to the logs.",
