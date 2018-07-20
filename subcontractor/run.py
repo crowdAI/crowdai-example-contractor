@@ -50,7 +50,6 @@ class CrowdAISubContractor:
 
     def run(self):
         for _agent_event in self.agent_events:
-            print("Event Received : {}".format(json.dumps(_agent_event)))
             payload = _agent_event["payload"]
             if _agent_event["event_type"] == self.agent_events.CROWDAI_EVENT_INFO:
                 self.handle_info_event(payload)
