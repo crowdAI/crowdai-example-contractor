@@ -15,7 +15,7 @@ def execution_start():
                 event_type=crowdai_events.CROWDAI_EVENT_INFO,
                 message="execution_started",
                 payload={ #Arbitrary Payload
-                    "type": "example_contractor:execution_started"
+                    "event_type": "example_contractor:execution_started"
                     }
                 )
 
@@ -29,7 +29,7 @@ def execution_progress(progress_payload):
                 event_type=crowdai_events.CROWDAI_EVENT_INFO,
                 message="execution_progress : {}".format(step),
                 payload={ #Arbitrary Payload
-                    "type": "example_contractor:execution_progress",
+                    "event_type": "example_contractor:execution_progress",
                     "step" : step
                     }
                 )
@@ -42,7 +42,7 @@ def execution_success():
                 event_type=crowdai_events.CROWDAI_EVENT_SUCCESS,
                 message="execution_success",
                 payload={ #Arbitrary Payload
-                    "type": "example_contractor:execution_success",
+                    "event_type": "example_contractor:execution_success",
                     },
                 blocking=True
                 )
@@ -55,7 +55,7 @@ def execution_error(error):
                 event_type=crowdai_events.CROWDAI_EVENT_ERROR,
                 message="execution_error",
                 payload={ #Arbitrary Payload
-                    "type": "example_contractor:execution_error",
+                    "event_type": "example_contractor:execution_error",
                     "error" : error
                     },
                 blocking=True
