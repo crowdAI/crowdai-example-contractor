@@ -3,7 +3,6 @@
 import os
 import redis
 import json
-import numpy as np
 import crowdai_api
 import timeout_decorator
 import base64
