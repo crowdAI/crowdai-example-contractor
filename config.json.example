@@ -1,0 +1,56 @@
+{
+  "challenge_name": "CrowdAI Test Challenge",
+  "challenge_slug": "test-challenge-ignore",
+  "admins": [
+    "spMohanty"
+  ],
+  "redis_host": "your <redis_host>",
+  "redis_port": 6379,
+  "redis_db": 0,
+  "redis_password": "your <redis_password>",
+  "redis_namespace": "test_challenge",
+  "job_enqueue_channel": "test_challenge",
+  "job_contractor_module_name": "general_evaluation_worker",
+  "total_job_processing_timeout": 10800,
+  "sensitive_keys": [
+    "redis_host",
+    "redis_password"
+  ],
+  "subcontractor_image": "crowdaidocker/example-subcontractor",
+  "resources": {
+    "redis": {
+      "requests": {
+        "cpu": 1,
+        "memory": "2048Mi"
+      },
+      "limits": {
+        "cpu": 1,
+        "memory": "2048Mi"
+      }
+    },
+    "subcontractor": {
+      "requests": {
+        "cpu": 1,
+        "memory": "2048Mi",
+        "gpu": 0
+      },
+      "limits": {
+        "cpu": 1,
+        "memory": "2048Mi",
+        "gpu": 0
+      }
+    },
+    "agent": {
+      "requests": {
+        "cpu": 1,
+        "memory": "2048Mi",
+        "gpu": 0
+      },
+      "limits": {
+        "cpu": 2,
+        "memory": "4096Mi",
+        "gpu": 0
+      }
+    }
+  }
+}

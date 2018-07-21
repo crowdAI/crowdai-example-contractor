@@ -27,7 +27,7 @@ class CrowdAIRenderer:
 
 if __name__ == "__main__":
 
-    challenge_config = json.loads(open("example_challenge_config.json").read())
+    challenge_config = json.loads(open("config.json").read())
 
     params = {}
     params["pod_name"] = "example-pod-name"
