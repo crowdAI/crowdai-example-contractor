@@ -1,0 +1,40 @@
+{
+  "challenge_id" : "test_challenge",
+  "subcontractor_image" : "crowdaidocker/example-subcontractor",
+  "resources": {
+    "redis" : {
+        "requests": {
+            "cpu" : 1,
+            "memory" : "2048Mi"
+            },
+        "limits" : {
+            "cpu" : 1,
+            "memory" : "2048Mi"
+        }
+    },
+    "subcontractor" : {
+        "requests": {
+            "cpu" : 1,
+            "memory" : "2048Mi",
+            "gpu" : 0
+            },
+        "limits" : {
+            "cpu" : 1,
+            "memory" : "2048Mi",
+            "gpu" : 0
+        }
+    },
+    "agent" : {
+        "requests": {
+            "cpu" : 1,
+            "memory" : "2048Mi",
+            "gpu" : 0
+            },
+        "limits" : {
+            "cpu" : 2,
+            "memory" : "4096Mi",
+            "gpu" : 0
+        }
+    }
+  }
+}

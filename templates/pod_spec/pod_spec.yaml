@@ -60,6 +60,8 @@ spec:
     image: {{ challenge_config.subcontractor_image }}
     imagePullPolicy: Always
     env:
+      - name: CROWDAI_DEBUG_MODE
+        value: "True"
       - name: CROWDAI_IS_GRADING
         value: "1"
       - name: CROWDAI_REDIS_COMMUNICATION_CHANNEL

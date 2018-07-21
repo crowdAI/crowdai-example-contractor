@@ -3,6 +3,7 @@
 import os
 from jinja2 import Environment, FileSystemLoader
 import uuid
+import json
 
 class CrowdAIRenderer:
     def __init__(self, challenge_config, templates_folder=False):
@@ -26,44 +27,7 @@ class CrowdAIRenderer:
 
 if __name__ == "__main__":
 
-    challenge_config = {}
-    challenge_config["subcontractor_image"] = "crowdaidocker/example-subcontractor"
-    challenge_config["resources"] = {
-        "redis" : {
-            "requests": {
-                "cpu" : 1,
-                "memory" : "2048Mi"
-                },
-            "limits" : {
-                "cpu" : 1,
-                "memory" : "2048Mi"
-            }
-        },
-        "subcontractor" : {
-            "requests": {
-                "cpu" : 1,
-                "memory" : "2048Mi",
-                "gpu" : 0
-                },
-            "limits" : {
-                "cpu" : 1,
-                "memory" : "2048Mi",
-                "gpu" : 0
-            }
-        },
-        "agent" : {
-            "requests": {
-                "cpu" : 1,
-                "memory" : "2048Mi",
-                "gpu" : 0
-                },
-            "limits" : {
-                "cpu" : 2,
-                "memory" : "4096Mi",
-                "gpu" : 0
-            }
-        }
-    }
+    challenge_config = json.loads(open("example_challenge_config.json").read())
 
     params = {}
     params["pod_name"] = "example-pod-name"
