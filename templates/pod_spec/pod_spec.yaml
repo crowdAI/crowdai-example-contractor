@@ -1,0 +1,93 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{params.pod_name}}
+  # Note that the Pod does not need to be in the same namespace as the loader.
+  labels:
+    app: {{params.app_name}}
+spec:
+  containers:
+  - name: redis
+    image: kubernetes/redis
+    imagePullPolicy: Always
+    command: ["redis-server"]
+    resources:
+      requests:
+        cpu: {{ challenge_config.resources["redis"]["requests"]["cpu"] }}
+        memory: {{ challenge_config.resources["redis"]["requests"]["memory"] }}
+      limits:
+        cpu: {{ challenge_config.resources["redis"]["limits"]["cpu"] }}
+        memory: {{ challenge_config.resources["redis"]["limits"]["memory"] }}
+{% for agent in params.agents %}
+  - name: {{ agent.name }}
+    image: {{ agent.image }}
+    imagePullPolicy: Always
+    env:
+      - name: CROWDAI_DEBUG_MODE
+        value: "True"
+      - name: CROWDAI_IS_GRADING
+        value: "1"
+      - name: CROWDAI_REDIS_COMMUNICATION_CHANNEL
+        value: {{ agent.communication_channel }}
+      - name: CROWDAI_BLOCKING_RESPONSE_CHANNEL
+        value: {{ agent.blocking_response_channel }}
+      - name: CROWDAI_AGENT_ID
+        value: {{ agent.id }}
+      - name: CROWDAI_REDIS_HOST
+        value: "127.0.0.1"
+      - name: CROWDAI_REDIS_PORT
+        value: "6379"
+      - name: CROWDAI_REDIS_DB
+        value: "0"
+      - name: REDIS_SOCKET_TIMEOUT
+        value: "86400"
+      - name: REDIS_SOCKET_CONNECT_TIMEOUT
+        value: "86400"
+    command: ["bash"]
+    args: ["-c", "printenv ; /home/crowdai/run.sh"]
+    resources:
+      requests:
+        cpu: {{ challenge_config.resources["subcontractor"]["requests"]["cpu"] }}
+        memory: {{ challenge_config.resources["subcontractor"]["requests"]["memory"] }}
+        nvidia.com/gpu: {% if agent.gpu %}1{% else %}0{% endif %}
+      limits:
+        cpu: {{ challenge_config.resources["subcontractor"]["limits"]["cpu"] }}
+        memory: {{ challenge_config.resources["subcontractor"]["limits"]["memory"] }}
+        nvidia.com/gpu: {% if agent.gpu %}1{% else %}0{% endif %}
+{% endfor %}
+  - name: crowdai-subcontractor
+    image: {{ challenge_config.subcontractor_image }}
+    imagePullPolicy: Always
+    env:
+      - name: CROWDAI_IS_GRADING
+        value: "1"
+      - name: CROWDAI_REDIS_COMMUNICATION_CHANNEL
+        value: {{ params.subcontractor_communication_channel }}
+      - name: CROWDAI_ORACLE_COMMUNICATION_CHANNEL
+        value: {{ params.subcontractor_oracle_communication_channel }}
+      - name: CROWDAI_BLOCKING_RESPONSE_CHANNEL
+        value: {{ params.subcontractor_blocking_response_channel }}
+      - name: CROWDAI_AGENT_ID
+        value: {{ params.subcontractor_id }}
+      - name: CROWDAI_REDIS_HOST
+        value: "127.0.0.1"
+      - name: CROWDAI_REDIS_PORT
+        value: "6379"
+      - name: CROWDAI_REDIS_DB
+        value: "0"
+      - name: REDIS_SOCKET_TIMEOUT
+        value: "86400"
+      - name: REDIS_SOCKET_CONNECT_TIMEOUT
+        value: "86400"
+    command: ["bash"]
+    args: ["-c", "printenv ; /home/crowdai/run.sh"]
+    resources:
+      requests:
+        cpu: {{ challenge_config.resources["subcontractor"]["requests"]["cpu"] }}
+        memory: {{ challenge_config.resources["subcontractor"]["requests"]["memory"] }}
+        nvidia.com/gpu: {{ challenge_config.resources["subcontractor"]["requests"]["gpu"] }}
+      limits:
+        cpu: {{ challenge_config.resources["subcontractor"]["limits"]["cpu"] }}
+        memory: {{ challenge_config.resources["subcontractor"]["limits"]["memory"] }}
+        nvidia.com/gpu: {{ challenge_config.resources["subcontractor"]["limits"]["gpu"] }}
