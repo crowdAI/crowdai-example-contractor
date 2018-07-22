@@ -1,6 +1,15 @@
 {
   "challenge_name": "CrowdAI Test Challenge",
   "challenge_slug": "test-challenge-ignore",
+  "sensitive_keys": [
+    "redis_host",
+    "redis_password",
+    "docker_username",
+    "docker_password",
+    "docker_image_name"
+  ],
+  "renderer_path": "challenges.example_contractor.renderer",
+  "evaluator_path": "challenges.example_contractor.evaluator",
   "admins": [
     "spMohanty"
   ],
@@ -9,13 +18,14 @@
   "redis_db": 0,
   "redis_password": "your <redis_password>",
   "redis_namespace": "test_challenge",
-  "job_enqueue_channel": "test_challenge",
+  "job_enqueue_channel": "test_challenge_worker",
   "job_contractor_module_name": "general_evaluation_worker",
   "total_job_processing_timeout": 10800,
-  "sensitive_keys": [
-    "redis_host",
-    "redis_password"
-  ],
+  "docker_registry_url": "",
+  "docker_username": "your <docker_username>",
+  "docker_password": "your <docker_password>",
+  "docker_image_name": "your <docker_image_name>",
+  "kube_config": "challenges/example_contractor/kube.config",
   "subcontractor_image": "crowdaidocker/example-subcontractor",
   "resources": {
     "redis": {

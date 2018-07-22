@@ -24,6 +24,18 @@ class CrowdAIRenderer:
             challenge_config=self.challenge_config,
             params=params
             )
+    def render_evaluation_state(self, evaluation_state):
+        _evaluation_state = {
+            "state" : "execution_pending",
+            "steps" : [],
+        }
+        _evaluation_state.update(evaluation_state)
+        template = self.jinja_env.get_template(
+            "evaluation_state/evaluation_state.yaml"
+            )
+        return template.render(
+            evaluation_state=_evaluation_state
+        )
 
 if __name__ == "__main__":
 

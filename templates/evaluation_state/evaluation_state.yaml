@@ -1,0 +1,18 @@
+# Evalution Logs
+{% if evaluation_state.state == "execution_pending" %}
+**State** : `Evaluation Pending`
+{% elif evaluation_state.state == "execution_started" %}
+**State** : `Evaluation Started`
+{% elif evaluation_state.state == "execution_progress" %}
+**State** : `Evaluation in Progress`
+**Steps Completed** : {{ len(evaluation_state.steps) }}
+{% elif evaluation_state.state == "execution_complete" %}
+**State** : `Evaluation Complete`
+**Score** : evaluation_state.score_object["score"]
+{% elif evaluation_state.state == "execution_error" %}
+**State** : `Evaluation Error`
+**Error**
+```
+{{ evaluation_state.error }}
+```
+{% endif %}

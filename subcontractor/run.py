@@ -4,6 +4,7 @@ import crowdai_api
 import traceback
 import logging
 import json
+import numpy as np
 
 class CrowdAISubContractor:
     def __init__(self):
@@ -35,6 +36,12 @@ class CrowdAISubContractor:
             raise Exception("Unknown event_type")
 
     def handle_success_event(self, payload):
+        self.evaluation_state["state"] = "execution_success"
+        _score_object = {
+            "score" : np.mean(self.evaluation_state["steps"]),
+            "score_secondary" : np.median(self.evaluation_state["steps"])
+        }
+        self.evaluation_state["score"] = _score_object
         self.evaluation_state["state"] = "execution_success"
         self.oracle_events.register_event(
             event_type=self.oracle_events.CROWDAI_EVENT_SUCCESS,
