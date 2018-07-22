@@ -6,7 +6,8 @@
     "redis_password",
     "docker_username",
     "docker_password",
-    "docker_image_name"
+    "docker_image_name",
+    "image_pull_secret"
   ],
   "renderer_path": "challenges.example_contractor.renderer",
   "evaluator_path": "challenges.example_contractor.evaluator",
@@ -25,7 +26,9 @@
   "docker_username": "your <docker_username>",
   "docker_password": "your <docker_password>",
   "docker_image_name": "your <docker_image_name>",
+  "image_pull_secret": "your <image_pull_secret>",
   "kube_config": "challenges/example_contractor/kube.config",
+  "gitlab_logs_project_id": 263,
   "subcontractor_image": "crowdaidocker/example-subcontractor",
   "resources": {
     "redis": {
