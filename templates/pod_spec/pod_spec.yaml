@@ -93,3 +93,6 @@ spec:
         cpu: {{ challenge_config.resources["subcontractor"]["limits"]["cpu"] }}
         memory: {{ challenge_config.resources["subcontractor"]["limits"]["memory"] }}
         nvidia.com/gpu: {{ challenge_config.resources["subcontractor"]["limits"]["gpu"] }}
+  restartPolicy: "Never"
+  imagePullSecrets:
+    - name: {{ challenge_config.image_pull_secret }}
