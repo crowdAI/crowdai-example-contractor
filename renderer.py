@@ -40,7 +40,7 @@ class CrowdAIRenderer:
         }
         _evaluation_state.update(evaluation_state)
         return """
-```
+```json
 
         {}
 
