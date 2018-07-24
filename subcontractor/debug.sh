@@ -3,7 +3,7 @@
 ARG=$1
 
 source environ.sh
-if [ "$ARGS" = "push" ]; then
+if [ "$ARGS" = "build_push" ]; then
   docker push ${IMAGE_NAME}
 fi
 
