@@ -4,3 +4,5 @@ __pycache__/
 environ.sh
 config.json
 kube.config
+*.iml
+*.rdb

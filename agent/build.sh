@@ -2,6 +2,8 @@
 
 ARGS=$1
 
+source environ.sh
+
 crowdai-repo2docker --no-run \
   --user-id 1001 \
   --user-name crowdai \
