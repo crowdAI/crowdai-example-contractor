@@ -3,7 +3,10 @@
 ARG=$1
 
 source environ.sh
-./build.sh push
+if [ "$ARGS" = "push" ]; then
+  docker push ${IMAGE_NAME}
+fi
+
 
 docker run -it \
   --net=host \
